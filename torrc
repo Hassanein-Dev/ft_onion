@@ -1,0 +1,16 @@
+RunAsDaemon 1
+
+DataDirectory /var/lib/tor
+
+HiddenServiceDir /var/lib/tor/hidden_service/
+
+HiddenServicePort 80 127.0.0.1:80
+HiddenServicePort 4242 127.0.0.1:4242
+Log notice syslog
+
+# Disable client connections to this Tor instance (we only want hidden service)
+SocksPort 0
+
+# Additional security: reject all non-local connections
+# This ensures Tor only serves the hidden service
+SocksPolicy reject *

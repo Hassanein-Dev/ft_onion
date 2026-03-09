@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ft_onion - Hidden Service</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+            color: #00ff00;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff00;
+        }
+        
+        .onion-icon {
+            text-align: center;
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .highlight {
+            color: #ff00ff;
+            font-weight: bold;
+        }
+        
+        .info-box {
+            background: rgba(0, 255, 0, 0.1);
+            border-left: 4px solid #00ff00;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        /* Form Styles */
+        .form-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(0, 255, 0, 0.05);
+            border-radius: 5px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00ff00;
+        }
+        
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        input:focus,
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #00cc00;
+            transform: translateY(-2px);
+        }
+        
+        .message {
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #00ff00;
+            display: none;
+        }
+        
+        .message.show {
+            display: block;
+        }
+        
+        .visitor-count {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #ff00ff;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="onion-icon">🧅</div>
+        <h1>Welcome to the Dark Side</h1>
+        
+        <p>
+            Congratulations! You have successfully accessed this <span class="highlight">Tor Hidden Service</span>. 
+            You are now browsing anonymously through the onion network.
+        </p>
+        
+        <div class="info-box">
+            <p><strong>🔐 What is this?</strong></p>
+            <p>
+                This is a demonstration of a Tor hidden service created for the ft_onion project. 
+                The service is hosted anonymously on the Tor network, providing both privacy 
+                for the server and anonymity for visitors.
+            </p>
+        </div>
+        
+        <p>
+            The <span class="highlight">Tor network</span> routes your connection through multiple relays, 
+            making it extremely difficult to trace the origin of the request or the location of the server. 
+            This technology enables free speech and privacy in the digital age.
+        </p>
+        
+        <div class="info-box">
+            <p><strong>⚙️ Technical Details:</strong></p>
+            <p>• Web Server: Nginx</p>
+            <p>• Network: Tor Hidden Service</p>
+            <p>• Protocol: HTTP on port 80</p>
+            <p>• SSH Access: Port 4242 (Fortified)</p>
+        </div>
+        
+        <!-- Interactive Contact Form -->
+        <div class="form-section">
+            <h2 style="margin-bottom: 15px; color: #00ff00;">📧 Anonymous Message</h2>
+            <form id="contactForm" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Alias:</label>
+                    <input type="text" id="name" placeholder="Anonymous" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" rows="4" placeholder="Your message..." required></textarea>
+                </div>
+                
+                <button type="submit">Send Message</button>
+            </form>
+            
+            <div id="formMessage" class="message"></div>
+        </div>
+        
+        <p>
+            Just like the ancient <span class="highlight">Silk Road</span> connected distant civilizations, 
+            the Tor network connects people across the globe, transcending borders and censorship.
+        </p>
+        
+        <div class="visitor-count">
+            👁️ You are visitor #<span id="visitorCount">0</span>
+        </div>
+        
+        <div class="footer">
+            <p>🌐 ft_onion - 42 Cybersecurity Piscine Project</p>
+            <p>Stay anonymous, stay free 🕶️</p>
+        </div>
+    </div>
+    
+    <script>
+        // Visitor counter
+        let visits = parseInt(localStorage.getItem('visits') || '0') + 1;
+        localStorage.setItem('visits', visits.toString());
+        document.getElementById('visitorCount').textContent = visits;
+        
+        // Form submission handler
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const message = document.getElementById('message').value;
+            const messageDiv = document.getElementById('formMessage');
+            
+            messageDiv.textContent = `✓ Message sent successfully, ${name}! Your message has been transmitted anonymously through the Tor network.`;
+            messageDiv.classList.add('show');
+            
+            document.getElementById('contactForm').reset();
+            
+            setTimeout(() => {
+                messageDiv.classList.remove('show');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

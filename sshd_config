@@ -1,0 +1,81 @@
+Port 4242
+AddressFamily any
+
+ListenAddress 0.0.0.0
+ListenAddress ::
+
+Protocol 2
+
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
+
+# Authentication settings
+
+PermitRootLogin no
+
+PubkeyAuthentication yes
+
+AuthorizedKeysFile .ssh/authorized_keys
+
+PasswordAuthentication no
+
+PermitEmptyPasswords no
+
+ChallengeResponseAuthentication no
+
+HostbasedAuthentication no
+IgnoreRhosts yes
+
+# GSSAPI options (typically used for Kerberos)
+GSSAPIAuthentication no
+
+# Session settings
+
+# Enable PAM (Pluggable Authentication Modules)
+UsePAM yes
+
+X11Forwarding no
+
+# Print message of the day
+PrintMotd no
+
+# Print last log
+PrintLastLog yes
+
+# Enable TCP keep alive
+TCPKeepAlive yes
+
+ClientAliveInterval 300
+ClientAliveCountMax 2
+
+MaxAuthTries 3
+MaxSessions 10
+
+# Security hardening
+
+# Disable tunneled clear text passwords
+PermitUserEnvironment no
+Compression delayed
+StrictModes yes
+LoginGraceTime 60
+
+AcceptEnv LANG LC_*
+
+# SFTP subsystem
+Subsystem sftp /usr/lib/openssh/sftp-server
+
+# bonus
+
+# Use strong ciphers only
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+
+# Use strong MAC algorithms
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256
+
+# Use strong key exchange algorithms
+KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
